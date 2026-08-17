@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 8 - Frontend Foundation (complete)
+Phase 9 - Interview Frontend (complete)
 
 ## Completed
 
@@ -43,6 +43,7 @@ Phase 8 - Frontend Foundation (complete)
 - Phase 5 committed as `1bbae7c phase-5-ai-service`.
 - Phase 6 committed as `fb0c627 phase-6-interview-api`.
 - Phase 7 committed as `80e21ca phase-7-reports-dashboard-history`.
+- Phase 8 committed as `9fec7e5 phase-8-frontend-foundation`.
 
 ## Phase 2 progress
 
@@ -150,6 +151,26 @@ Phase 8 - Frontend Foundation (complete)
 - Frontend `npm.cmd run test`: PASS (4 files, 9 tests, 0 failures). Coverage verifies valid login, invalid login feedback, invalid registration, duplicate-email feedback, auth state and logout, protected-route redirect, validation, and JWT expiry/malformed-token handling.
 - Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; compilation, TypeScript validation, static generation, and optimization completed successfully for `/`, `/login`, `/register`, `/dashboard`, and the not-found route.
 - Vitest required execution outside the managed filesystem sandbox because its esbuild configuration loader was denied access while resolving the workspace path; the test process then ran normally and all tests passed.
+- No deployment was performed and no secrets were added.
+
+## Phase 9 completion
+
+- Added the protected `/interview/setup` workflow with large IT Field and Non-IT Field selectors and backend-driven domain, mode, difficulty, experience, role, custom-domain, and question-count controls.
+- Loaded all independent option catalogs, display labels, question bounds, and published text constraints from authenticated `GET /api/interview-options`; switching categories clears incompatible domain and mode choices.
+- Added frontend validation for required and bounded inputs, conditional custom domains, backend field-error mapping, option loading/empty/error states, retry actions, and preserved unfinished setup choices in session storage.
+- Implemented authenticated interview creation through `POST /api/interviews`, clears the saved setup only after success, and navigates using only the returned session ID at `/interview/{sessionId}`.
+- Added the protected dynamic live-interview route with backend refresh restoration through `GET /api/interviews/{sessionId}` and no transcript or answer data in URL or client route state.
+- Added responsive session metadata, IT/Non-IT and configuration badges, authoritative question progress and status, elapsed timer, ordered assistant/user transcript bubbles, timestamps, and automatic transcript scrolling.
+- Added answer submission through `POST /api/interviews/{sessionId}/answers`, Enter submission, Shift+Enter newlines, character bounds/counting, duplicate-submit locking, AI processing feedback, adaptive follow-up rendering, and answer preservation after failures.
+- Active interviews never render answer evaluations, hints, suggested answers, scores, or private AI reasoning returned in backend data.
+- Added confirmed manual completion and abandonment through their authenticated endpoints, terminal completed/abandoned views, automatic terminal-state handling from answer responses, and disabled answering for closed sessions.
+- Added invalid/missing-session, unauthorized-session, backend-unavailable, AI-provider, options-load, and mutation error handling with appropriate retry or preserved-input behavior. Phase 8 JWT interception continues to clear expired/invalid authentication.
+- Updated authenticated navigation and the dashboard call to action to reach interview setup while preserving the Phase 8 authentication and landing foundation.
+- Frontend `npm.cmd run typecheck`: PASS (0 TypeScript errors).
+- Frontend `npm.cmd run lint`: PASS (0 errors, 0 warnings).
+- Frontend `npm.cmd run test`: PASS (6 files, 19 tests, 0 failures). Phase 9 coverage verifies option loading, IT/Non-IT switching, custom-domain and blank validation, creation payload and session navigation, setup failure/retry, refresh restoration, question/progress/transcript display, hidden evaluations, answer submission, AI loading, duplicate prevention, preserved failed answers, completion, abandonment, invalid-session handling, and protected access.
+- Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; compilation, TypeScript validation, and generation completed for static setup and dynamic `/interview/[sessionId]` routes.
+- Vitest required execution outside the managed filesystem sandbox because its esbuild configuration loader cannot resolve this workspace path inside the sandbox; the suite itself ran normally and passed completely.
 - No deployment was performed and no secrets were added.
 
 No deployment was performed.
