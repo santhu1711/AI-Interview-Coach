@@ -1,0 +1,3 @@
+import type { InputHTMLAttributes } from "react";
+interface Props extends InputHTMLAttributes<HTMLInputElement> { label: string; error?: string; }
+export function FormField({ label, error, id, className = "", ...props }: Props) { return <div className="grid gap-2"><label className="text-sm font-medium" htmlFor={id}>{label}</label><input aria-describedby={error ? `${id}-error` : undefined} aria-invalid={Boolean(error)} className={`min-h-11 rounded-md border border-zinc-700 bg-zinc-900 px-3 text-zinc-100 placeholder:text-zinc-500 ${className}`} id={id} {...props}/>{error && <p className="text-sm text-red-400" id={`${id}-error`} role="alert">{error}</p>}</div>; }

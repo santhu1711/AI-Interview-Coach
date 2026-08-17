@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 7 - Reports, Dashboard, and History Backend (complete)
+Phase 8 - Frontend Foundation (complete)
 
 ## Completed
 
@@ -42,6 +42,7 @@ Phase 7 - Reports, Dashboard, and History Backend (complete)
 - Phase 4 committed as `eb20a88 phase-4-interview-categories`.
 - Phase 5 committed as `1bbae7c phase-5-ai-service`.
 - Phase 6 committed as `fb0c627 phase-6-interview-api`.
+- Phase 7 committed as `80e21ca phase-7-reports-dashboard-history`.
 
 ## Phase 2 progress
 
@@ -133,5 +134,22 @@ Phase 7 - Reports, Dashboard, and History Backend (complete)
 - Phase 7-focused automated tests: PASS (12 tests, 0 failures, 0 errors, 0 skipped).
 - Complete backend `mvn test`: BUILD SUCCESS (69 tests discovered, 67 passed, 0 failures, 0 errors, 2 skipped).
 - The two skipped tests are the guarded Phase 2 real-MySQL integration tests because `MYSQL_INTEGRATION_TESTS=true` was not set for this Phase 7 run; their mandatory real-MySQL execution remains recorded above as PASS with no skipped MySQL tests.
+
+## Phase 8 completion
+
+- Expanded the responsive dark landing page while preserving its required heading, subtitle, IT and Non-IT positioning, report and analytics features, and unauthenticated calls to action.
+- Added authentication-aware landing navigation that shows login and registration actions when signed out and dashboard, user, and logout actions when signed in.
+- Implemented accessible login and registration pages using React Hook Form and Zod, including inline validation, show/hide password controls, disabled loading states, invalid-login feedback, duplicate-email feedback, and backend field-error mapping.
+- Added typed authentication request, response, user, and API-error models plus a typed Axios client configured by `NEXT_PUBLIC_API_URL`.
+- Added bearer-token request interception, malformed/expired-token rejection, HTTP 401 session clearing, and a shared unauthorized handler. JWTs are never placed in URLs.
+- Added an authentication context that restores the current user with `/api/auth/me`, exposes login/register/logout state transitions, and clears invalid sessions.
+- Added shared button, form-field, password-field, loading, error, retry, and skeleton components for reuse in later frontend phases.
+- Added protected-route handling with a session-check loading state and safe return-path redirect, plus a protected dashboard foundation without starting Phase 9 functionality.
+- Frontend `npm.cmd run typecheck`: PASS (0 TypeScript errors).
+- Frontend `npm.cmd run lint`: PASS (0 errors, 0 warnings).
+- Frontend `npm.cmd run test`: PASS (4 files, 9 tests, 0 failures). Coverage verifies valid login, invalid login feedback, invalid registration, duplicate-email feedback, auth state and logout, protected-route redirect, validation, and JWT expiry/malformed-token handling.
+- Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; compilation, TypeScript validation, static generation, and optimization completed successfully for `/`, `/login`, `/register`, `/dashboard`, and the not-found route.
+- Vitest required execution outside the managed filesystem sandbox because its esbuild configuration loader was denied access while resolving the workspace path; the test process then ran normally and all tests passed.
+- No deployment was performed and no secrets were added.
 
 No deployment was performed.

@@ -1,0 +1,3 @@
+import { ProtectedRoute } from "@/components/auth/protected-route";
+import { Header } from "@/components/layout/header";
+export default function DashboardPage() { return <ProtectedRoute><Header/><main className="mx-auto max-w-6xl px-6 py-12"><p className="text-sm font-semibold tracking-widest text-blue-400">YOUR WORKSPACE</p><h1 className="mt-3 text-4xl font-bold">Dashboard</h1><div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-950 p-8"><h2 className="text-xl font-semibold">Ready for your next interview?</h2><p className="mt-2 max-w-2xl leading-7 text-zinc-400">Your authenticated frontend foundation is ready. Interview setup, live practice, reports, and analytics arrive in the next frontend phases.</p></div></main></ProtectedRoute>; }

@@ -1,0 +1,4 @@
+import { AlertCircle, LoaderCircle } from "lucide-react";
+export function LoadingState({ label = "Loading" }: { label?: string }) { return <div aria-live="polite" className="flex items-center justify-center gap-3 py-12 text-zinc-400" role="status"><LoaderCircle aria-hidden className="animate-spin"/><span>{label}</span></div>; }
+export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) { return <div className="rounded-lg border border-red-900 bg-red-950/40 p-4 text-red-200" role="alert"><div className="flex gap-2"><AlertCircle aria-hidden/><p>{message}</p></div>{onRetry && <button className="mt-3 text-sm font-semibold underline" onClick={onRetry} type="button">Try again</button>}</div>; }
+export function Skeleton({ className = "h-5 w-full" }: { className?: string }) { return <div aria-hidden className={`animate-pulse rounded bg-zinc-800 ${className}`}/>; }
