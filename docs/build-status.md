@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 1 - Project Scaffolding (complete)
+Phase 2 - Database Persistence (complete)
 
 ## Completed
 
@@ -32,7 +32,33 @@ Phase 1 - Project Scaffolding (complete)
 
 ## Deferred external verification
 
-- MySQL CLI is not installed or is not on `PATH`; real MySQL migration verification belongs to Phase 2 and cannot run yet.
 - No Groq smoke test can run until `GROQ_API_KEY` is supplied in the local environment.
 
-Phase 1 is fully verified and ready for its checkpoint commit. No deployment was performed.
+## Phase checkpoints
+
+- Phase 1 committed as `d69a28d phase-1-project-scaffolding`.
+
+## Phase 2 progress
+
+- Added all required user, interview session, interview message, and interview report JPA entities.
+- Added field, domain, mode, state, evaluation, recommendation, and role enums.
+- Added ownership-aware Spring Data repositories and ordered transcript queries.
+- Added Flyway migrations `V1` through `V5` with foreign keys, checks, indexes, unique message ordering, cascading cleanup, and one-report-per-interview enforcement.
+- User-confirmed real MySQL startup: PASS against MySQL 8.0.46. Flyway applied V1-V5 successfully, Hibernate/JPA initialized, and Spring Boot started on port 8080.
+- Added guarded real-MySQL integration coverage for Flyway history, schema metadata, foreign keys, indexes, unique constraints, nullability, enum round-trips, ownership queries, graph CRUD, and cascade deletion.
+- Real MySQL integration suite: PASS against MySQL 8.0.46 with no skipped MySQL tests.
+- Flyway V1-V5 history and resulting tables: PASS.
+- Foreign keys, indexes, unique constraints, and nullable constraints: PASS.
+- Enum persistence for categories, domains, modes, difficulty, experience, status, message roles, evaluations, and recommendations: PASS.
+- Real CRUD for `User`, `InterviewSession`, `InterviewMessage`, and `InterviewReport`: PASS.
+- Ownership queries, ordered transcripts, and cascade deletion: PASS.
+- Complete backend `mvn test`: BUILD SUCCESS (10 tests passed, 0 failures, 0 errors, 0 skipped).
+- H2 repository verification: PASS for UUID persistence, ownership isolation, transcript ordering, sequence calculation, and duplicate-report rejection.
+
+## Phase 2 completion
+
+- All required Phase 2 database and persistence checks passed against real local MySQL.
+- No credentials or secrets are stored in the repository.
+- Phase 2 is ready for the `phase-2-database-persistence` checkpoint.
+
+No deployment was performed.
