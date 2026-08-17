@@ -1,10 +1,10 @@
 # Build status
 
-Last attempted: 2026-08-17
+Last attempted: 2026-08-18
 
 ## Current phase
 
-Phase 10 - Complete Frontend (complete)
+Phase 11 - Full Local Integration (complete)
 
 ## Completed
 
@@ -45,6 +45,7 @@ Phase 10 - Complete Frontend (complete)
 - Phase 7 committed as `80e21ca phase-7-reports-dashboard-history`.
 - Phase 8 committed as `9fec7e5 phase-8-frontend-foundation`.
 - Phase 9 committed as `21d03e4 phase-9-interview-frontend`.
+- Phase 10 committed as `4eeda67 phase-10-complete-frontend`.
 
 ## Phase 2 progress
 
@@ -192,6 +193,29 @@ Phase 10 - Complete Frontend (complete)
 - Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; compilation, TypeScript validation, static generation, and dynamic report/interview routes completed successfully.
 - Vitest required execution outside the managed filesystem sandbox because its esbuild configuration loader cannot resolve this workspace path inside the sandbox; the suite itself ran normally and passed completely.
 - Maven emitted its existing Mockito/Byte Buddy future-JDK dynamic-agent notice during tests; it did not indicate a test or application failure.
+- No deployment was performed and no secrets were added.
+
+## Phase 11 completion
+
+- Ran an isolated local MySQL 8.0.46 instance, the Spring Boot API on port 8080, and the Next.js application on port 3000. The temporary database directory and credentials were excluded from source control and removed after verification.
+- Flyway applied and validated migrations V1-V5 against real MySQL. Post-run persistence evidence contained 14 users, 43 interview sessions, 104 transcript messages, and 7 reports across IT and Non-IT workflows and active, completed/report-generated, and abandoned states.
+- Verified real frontend-to-backend HTTP communication, registration, login, bearer JWT authentication, `/api/auth/me` restoration, protected navigation, logout, invalid/expired token cleanup, and anonymous access rejection.
+- Verified exact-origin CORS behavior: `http://localhost:3000` preflight succeeded with credentials and configured methods, while an unapproved origin received HTTP 403.
+- Verified backend-driven interview options, IT and Non-IT creation, UUID-only navigation, active-session refresh restoration, answer submission, adaptive follow-up behavior, automatic and manual completion, abandonment, and terminal-state rendering.
+- Verified report generation and rendering, dashboard summary/performance data, history search/filter/sort/pagination, profile retrieval/update, and user ownership isolation. A second authenticated user received the same HTTP 404 boundary for another user's read and delete requests.
+- Verified real API and UI negative states for invalid credentials, anonymous protected requests, invalid sessions, delayed loading, aborted-network retry, empty/no-report states, expired authentication, and a 375px mobile viewport without horizontal overflow.
+- Added Playwright local-integration coverage and an independent `test:e2e` command. The suite uses real browser requests, Spring controllers/services, and MySQL persistence; the deterministic AI provider is selected only by the test profile so the repeatable integration suite does not depend on mocked API routes.
+- Playwright `npm.cmd run test:e2e`: PASS (3 browser scenarios, 0 failures) covering the complete IT flow, Non-IT/manual/abandonment/pagination flow, CORS/security/error states, and mobile behavior.
+- Corrected a protected-page logout race by performing a full landing-page replacement only after auth state is cleared.
+- Corrected Spring construction of `GroqInterviewAiProvider` by explicitly marking its runtime dependency constructor for injection; this was exposed by starting a real database-backed application context.
+- Separated Vitest discovery from Playwright specs so the unit and end-to-end suites remain independently executable.
+- Complete backend `mvn.cmd test` with `MYSQL_INTEGRATION_TESTS=true`: BUILD SUCCESS (71 tests, 0 failures, 0 errors, 0 skipped).
+- Frontend `npm.cmd run typecheck`: PASS (0 TypeScript errors).
+- Frontend `npm.cmd run lint`: PASS (0 errors, 0 warnings).
+- Frontend `npm.cmd run test`: PASS (10 files, 31 tests, 0 failures).
+- Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; production compilation, TypeScript checking, page-data collection, and static/dynamic route generation completed successfully.
+- Real Groq provider smoke test: NOT RUN because `GROQ_API_KEY` was not present. Provider parsing/retry behavior remains covered by 8 passing backend tests, and no secret was requested, logged, or committed.
+- Maven emitted its existing Mockito/Byte Buddy future-JDK dynamic-agent notice; it did not indicate a test or application failure.
 - No deployment was performed and no secrets were added.
 
 No deployment was performed.

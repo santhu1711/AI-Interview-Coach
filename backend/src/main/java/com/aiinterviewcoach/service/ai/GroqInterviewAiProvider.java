@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,6 +21,7 @@ public class GroqInterviewAiProvider implements InterviewAiProvider {
     private final WebClient webClient;
     private final AiProperties properties;
 
+    @Autowired
     public GroqInterviewAiProvider(WebClient.Builder webClientBuilder, AiProperties properties) {
         this(webClientBuilder.baseUrl(properties.getBaseUrl()).build(), properties);
     }
