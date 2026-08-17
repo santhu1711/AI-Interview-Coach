@@ -4,7 +4,7 @@ Last attempted: 2026-08-18
 
 ## Current phase
 
-Phase 11 - Full Local Integration (complete)
+Phase 12 - Final Local Verification (complete)
 
 ## Completed
 
@@ -46,6 +46,7 @@ Phase 11 - Full Local Integration (complete)
 - Phase 8 committed as `9fec7e5 phase-8-frontend-foundation`.
 - Phase 9 committed as `21d03e4 phase-9-interview-frontend`.
 - Phase 10 committed as `4eeda67 phase-10-complete-frontend`.
+- Phase 11 committed as `293a8b7 phase-11-complete-local-integration`.
 
 ## Phase 2 progress
 
@@ -216,6 +217,27 @@ Phase 11 - Full Local Integration (complete)
 - Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; production compilation, TypeScript checking, page-data collection, and static/dynamic route generation completed successfully.
 - Real Groq provider smoke test: NOT RUN because `GROQ_API_KEY` was not present. Provider parsing/retry behavior remains covered by 8 passing backend tests, and no secret was requested, logged, or committed.
 - Maven emitted its existing Mockito/Byte Buddy future-JDK dynamic-agent notice; it did not indicate a test or application failure.
+- No deployment was performed and no secrets were added.
+
+## Phase 12 completion
+
+- Reviewed the complete repository against `docs/codex-master-prompt.md` and confirmed the implemented Phase 1-11 application covers the specified backend, persistence, security, AI orchestration, interview/report/dashboard/history/profile APIs, frontend workflows, state/error handling, and local integration boundaries.
+- Found and completed the remaining specification-required documentation: architecture, authentication/interview/AI flows, database design, security model, testing guide, and clean-machine local setup guide, including the required Mermaid diagrams.
+- Replaced the early construction README with the final project overview, IT/Non-IT features, stack, architecture, folder layout, prerequisites, Java/Node/MySQL setup, runtime variables, backend/frontend/test commands, URLs, troubleshooting, screenshots-not-captured notice, limitations, future enhancements, and author section.
+- Ran an isolated local MySQL 8.0.46 instance, Spring Boot on port 8080, and Next.js on port 3000. Health and landing requests returned HTTP 200; Flyway applied/validated V1-V5.
+- Complete backend `mvn.cmd test` with `MYSQL_INTEGRATION_TESTS=true`: BUILD SUCCESS (71 tests, 0 failures, 0 errors, 0 skipped). The guarded real-MySQL schema/persistence tests ran rather than skipping.
+- Final MySQL E2E evidence contained 4 users, 14 sessions, 27 messages, and 2 reports, including IT and Non-IT report-generated sessions, an abandoned Non-IT session, and pagination data.
+- Frontend `npm.cmd run typecheck`: PASS (0 TypeScript errors).
+- Frontend `npm.cmd run lint`: PASS (0 errors, 0 warnings).
+- Frontend `npm.cmd run test`: PASS (10 files, 31 tests, 0 failures).
+- Frontend `npm.cmd run build`: PASS with Next.js 16.3.1, including production compilation, TypeScript, page data, and all static/dynamic routes.
+- Playwright `npm.cmd run test:e2e`: PASS (3 Chromium scenarios, 0 failures in 33.3 seconds).
+- The final E2E rerun verified registration, login/logout, JWT restoration/expiry, protected access, IT and Non-IT creation, UUID navigation, refresh recovery, answers, adaptive follow-ups, automatic/manual completion, abandonment, reports, dashboard analytics, history search/sort/pagination, profile update, ownership isolation, CORS allow/reject behavior, validation, loading/network/empty/invalid-session states, and 375px mobile layout.
+- Frontend `npm.cmd audit`: PASS (0 vulnerabilities) after using the Windows system CA because the first registry request encountered a local certificate-chain error.
+- Maven compiled, resolved, and tested the complete declared dependency set. An additional non-required `dependency:tree` invocation could not download the previously uncached Maven dependency plugin because this machine's Java trust store rejected Maven Central's certificate; this did not affect the successful clean application test suite and is recorded rather than reported as a security scan pass.
+- Repository hygiene review found no tracked `.env`, runtime database, log, build, Next.js, or Playwright artifact; no private-key, common API-token, Phase 12 database credential, debug statement, or unfinished task marker was found outside the saved specification and dependency integrity data.
+- Real Groq smoke test: NOT RUN because `GROQ_API_KEY` was absent. Groq parsing, retry, error classification, and structured output remain covered by backend tests, but a real provider call remains the sole external manual verification item.
+- Maven emitted the existing Mockito/Byte Buddy future-JDK dynamic-agent notice; it did not represent a failure. The local-stack processes and disposable database were stopped and removed after verification.
 - No deployment was performed and no secrets were added.
 
 No deployment was performed.
