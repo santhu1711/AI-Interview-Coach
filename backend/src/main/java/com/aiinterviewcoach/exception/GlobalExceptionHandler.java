@@ -43,6 +43,17 @@ public class GlobalExceptionHandler {
                 Map.of("confirmPassword", exception.getMessage()));
     }
 
+    @ExceptionHandler(InvalidInterviewConfigurationException.class)
+    ResponseEntity<ApiErrorResponse> invalidInterviewConfiguration(
+            InvalidInterviewConfigurationException exception, HttpServletRequest request) {
+        return response(
+                HttpStatus.BAD_REQUEST,
+                "Validation Failed",
+                "The interview configuration is invalid.",
+                request,
+                Map.of(exception.getField(), exception.getMessage()));
+    }
+
     @ExceptionHandler(DuplicateEmailException.class)
     ResponseEntity<ApiErrorResponse> duplicateEmail(
             DuplicateEmailException exception, HttpServletRequest request) {
@@ -95,4 +106,3 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(body);
     }
 }
-

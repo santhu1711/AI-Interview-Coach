@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 3 - Authentication and Security (complete)
+Phase 4 - IT and Non-IT Configuration (complete)
 
 ## Completed
 
@@ -38,6 +38,7 @@ Phase 3 - Authentication and Security (complete)
 
 - Phase 1 committed as `d69a28d phase-1-project-scaffolding`.
 - Phase 2 committed as `62799d4 phase-2-database-persistence`.
+- Phase 3 committed as `d61f525 phase-3-authentication-security`.
 
 ## Phase 2 progress
 
@@ -73,5 +74,17 @@ Phase 3 - Authentication and Security (complete)
 - Redacted passwords, confirmations, and access tokens from DTO string representations used by framework debug logging.
 - Phase 3-only test suite: PASS (9 tests, 0 failures, 0 errors, 0 skipped).
 - Verified registration validation, BCrypt persistence, duplicate email handling, confirmation mismatch, valid and invalid login, protected current-user access, missing and invalid JWT handling, token signature validation, token tampering, token expiry, and weak-secret rejection.
+
+## Phase 4 completion
+
+- Implemented the complete IT and Non-IT domain and interview-mode catalogs from the master specification.
+- Added readable backend-owned labels for field categories, domains, modes, difficulties, and experience levels.
+- Implemented authenticated `GET /api/interview-options` with category-scoped domains and modes, field-specific domain labels, question-count defaults and bounds, and custom-domain and target-role length constraints.
+- Added reusable validation for category/domain/mode compatibility, conditional custom domains, target roles, and question-count bounds.
+- Added structured HTTP 400 handling for invalid interview configurations.
+- Verified the IT catalog, Non-IT catalog, invalid cross-category combinations, custom-domain behavior, input bounds, authenticated access, and HTTP 401 responses for anonymous access.
+- Phase 4-only test suite: PASS (8 tests, 0 failures, 0 errors, 0 skipped).
+- Complete backend `mvn test`: BUILD SUCCESS (27 tests discovered, 25 passed, 0 failures, 0 errors, 2 skipped).
+- The two skipped tests are the guarded Phase 2 MySQL integration tests because `MYSQL_INTEGRATION_TESTS=true` and database credentials were not present in this Codex process; their required real-MySQL run is already recorded above as PASS with no skipped MySQL tests.
 
 No deployment was performed.
