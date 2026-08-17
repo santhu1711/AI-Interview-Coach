@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 4 - IT and Non-IT Configuration (complete)
+Phase 5 - AI Service (complete)
 
 ## Completed
 
@@ -39,6 +39,7 @@ Phase 4 - IT and Non-IT Configuration (complete)
 - Phase 1 committed as `d69a28d phase-1-project-scaffolding`.
 - Phase 2 committed as `62799d4 phase-2-database-persistence`.
 - Phase 3 committed as `d61f525 phase-3-authentication-security`.
+- Phase 4 committed as `eb20a88 phase-4-interview-categories`.
 
 ## Phase 2 progress
 
@@ -86,5 +87,18 @@ Phase 4 - IT and Non-IT Configuration (complete)
 - Phase 4-only test suite: PASS (8 tests, 0 failures, 0 errors, 0 skipped).
 - Complete backend `mvn test`: BUILD SUCCESS (27 tests discovered, 25 passed, 0 failures, 0 errors, 2 skipped).
 - The two skipped tests are the guarded Phase 2 MySQL integration tests because `MYSQL_INTEGRATION_TESTS=true` and database credentials were not present in this Codex process; their required real-MySQL run is already recorded above as PASS with no skipped MySQL tests.
+
+## Phase 5 completion
+
+- Added a configurable Groq OpenAI-compatible WebClient provider with configurable base URL, model, API key, and 20-second default timeout.
+- Added the complete interviewer prompt context, difficulty guidance, IT and Non-IT guardrails, transcript handling, follow-up context, and prompt-injection boundaries around provider data.
+- Added a strict five-field structured response contract with markdown-fence removal, safe JSON extraction, field and enum validation, first-question evaluation enforcement, and one corrective retry for malformed output.
+- Added one retry for transient rate-limit, timeout, network, and provider-unavailable failures; authentication, empty-response, invalid-envelope, and permanent provider failures return professional API errors without exposing provider details.
+- Added a deterministic AI provider enabled only by `app.ai.provider=deterministic-test`, which is configured in the test profile and never selected in development or production.
+- Corrected the options metadata to match the persisted custom-domain and target-role capacities of 120 and 150 characters.
+- Phase 5-only test suite: PASS (18 tests, 0 failures, 0 errors, 0 skipped).
+- Complete backend `mvn test`: BUILD SUCCESS (45 tests discovered, 43 passed, 0 failures, 0 errors, 2 skipped).
+- The two skipped tests remain the guarded Phase 2 MySQL integration tests; the required real-MySQL verification is already recorded above as PASS.
+- Real Groq smoke test: NOT RUN because `GROQ_API_KEY` is not present in this process. No key was requested, logged, or committed.
 
 No deployment was performed.

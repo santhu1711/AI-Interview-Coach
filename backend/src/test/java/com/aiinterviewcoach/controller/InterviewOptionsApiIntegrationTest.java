@@ -51,7 +51,8 @@ class InterviewOptionsApiIntegrationTest {
                 .andExpect(jsonPath("$.maximumQuestions").value(20))
                 .andExpect(jsonPath("$.defaultQuestions").value(10))
                 .andExpect(jsonPath("$.customDomain.minimumLength").value(2))
-                .andExpect(jsonPath("$.targetRole.maximumLength").value(100));
+                .andExpect(jsonPath("$.customDomain.maximumLength").value(120))
+                .andExpect(jsonPath("$.targetRole.maximumLength").value(150));
     }
 
     private String registerAndGetToken() throws Exception {

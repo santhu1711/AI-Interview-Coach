@@ -72,6 +72,18 @@ public class GlobalExceptionHandler {
         return response(HttpStatus.NOT_FOUND, "Not Found", exception.getMessage(), request, Map.of());
     }
 
+    @ExceptionHandler(AiProviderException.class)
+    ResponseEntity<ApiErrorResponse> aiProviderError(
+            AiProviderException exception, HttpServletRequest request) {
+        log.warn("AI provider request failed at {}: {}", request.getRequestURI(), exception.getMessage());
+        return response(
+                exception.getStatus(),
+                "AI Provider Error",
+                exception.getMessage(),
+                request,
+                Map.of());
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     ResponseEntity<ApiErrorResponse> dataConflict(
             DataIntegrityViolationException exception, HttpServletRequest request) {

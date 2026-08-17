@@ -20,9 +20,9 @@ public class InterviewOptionsService {
     public static final int MAXIMUM_QUESTIONS = 20;
     public static final int DEFAULT_QUESTIONS = 10;
     public static final int CUSTOM_DOMAIN_MINIMUM_LENGTH = 2;
-    public static final int CUSTOM_DOMAIN_MAXIMUM_LENGTH = 100;
+    public static final int CUSTOM_DOMAIN_MAXIMUM_LENGTH = 120;
     public static final int TARGET_ROLE_MINIMUM_LENGTH = 2;
-    public static final int TARGET_ROLE_MAXIMUM_LENGTH = 100;
+    public static final int TARGET_ROLE_MAXIMUM_LENGTH = 150;
 
     private static final List<InterviewDomain> IT_DOMAINS = List.of(
             InterviewDomain.JAVA, InterviewDomain.SPRING_BOOT, InterviewDomain.DSA,
