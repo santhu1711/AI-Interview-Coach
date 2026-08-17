@@ -10,15 +10,33 @@ public class DeterministicTestInterviewAiProvider implements InterviewAiProvider
     public String generate(String prompt) {
         boolean nonIt = prompt.contains("Field category: NON_IT");
         boolean firstQuestion = prompt.contains("Current question number: 0");
-        String message = nonIt
-                ? "Tell me about a challenging workplace situation and how you handled it."
-                : "Explain a core concept from the selected technical domain and where you would apply it.";
+        String latestAnswer = latestAnswer(prompt).toLowerCase();
+        boolean followUp = !firstQuestion && latestAnswer.contains("partial");
+        String evaluation = firstQuestion
+                ? "NOT_APPLICABLE"
+                : followUp ? "PARTIAL" : latestAnswer.contains("incorrect") ? "INCORRECT" : "STRONG";
+        String message = followUp
+                ? "Could you expand on the most important missing part?"
+                : nonIt
+                        ? "What challenging workplace situation have you handled, and what did you do?"
+                        : "What core concept from the selected technical domain would you apply here, and why?";
         return """
                 {"message":"%s","evaluation":"%s",
-                "questionCategory":"%s","isFollowUp":false,"shouldComplete":false}
+                "questionCategory":"%s","isFollowUp":%s,"shouldComplete":false}
                 """.formatted(
                 message,
-                firstQuestion ? "NOT_APPLICABLE" : "STRONG",
-                nonIt ? "Professional Scenario" : "Technical Fundamentals");
+                evaluation,
+                nonIt ? "Professional Scenario" : "Technical Fundamentals",
+                followUp);
+    }
+
+    private static String latestAnswer(String prompt) {
+        int start = prompt.lastIndexOf("USER: ");
+        if (start < 0) {
+            return "";
+        }
+        int contentStart = start + "USER: ".length();
+        int end = prompt.indexOf('\n', contentStart);
+        return end < 0 ? prompt.substring(contentStart) : prompt.substring(contentStart, end);
     }
 }

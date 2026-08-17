@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.aiinterviewcoach.repository.InterviewMessageRepository;
+import com.aiinterviewcoach.repository.InterviewSessionRepository;
 import com.aiinterviewcoach.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import org.springframework.test.web.servlet.MockMvc;
 class PublicEndpointSecurityTest {
     @Autowired private MockMvc mockMvc;
     @MockitoBean private UserRepository userRepository;
+    @MockitoBean private InterviewSessionRepository interviewSessionRepository;
+    @MockitoBean private InterviewMessageRepository interviewMessageRepository;
 
     @Test
     void actuatorHealthIsPublic() throws Exception {

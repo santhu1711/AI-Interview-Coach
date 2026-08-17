@@ -61,6 +61,7 @@ public class InterviewAiService {
             root.fieldNames().forEachRemaining(fields::add);
             require(fields.equals(REQUIRED_FIELDS), "AI response fields do not match the required contract.");
             String message = requiredText(root, "message", MAX_MESSAGE_LENGTH);
+            require(countQuestions(message) == 1, "AI response must contain exactly one question.");
             String category = requiredText(root, "questionCategory", MAX_CATEGORY_LENGTH);
             AnswerEvaluation evaluation;
             try {
@@ -106,6 +107,20 @@ public class InterviewAiService {
         String text = value.textValue().trim();
         require(text.length() <= maximumLength, field + " is too long.");
         return text;
+    }
+
+    private static long countQuestions(String message) {
+        long count = 0;
+        for (int index = 0; index < message.length(); index++) {
+            if (message.charAt(index) == '?'
+                    && (index == message.length() - 1
+                    || Character.isWhitespace(message.charAt(index + 1))
+                    || message.charAt(index + 1) == '\''
+                    || message.charAt(index + 1) == '"')) {
+                count++;
+            }
+        }
+        return count;
     }
 
     private static void validateContext(InterviewAiContext context) {

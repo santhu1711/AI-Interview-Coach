@@ -90,6 +90,18 @@ class InterviewAiServiceTest {
     }
 
     @Test
+    void retriesResponsesContainingMoreThanOneQuestion() {
+        String multipleQuestions = validResponse().replace(
+                "How does encapsulation help a Java application?",
+                "What is encapsulation? Why is it useful?");
+        when(provider.generate(contains("Field category: IT"))).thenReturn(multipleQuestions);
+        when(provider.generate(contains("Your previous response was invalid"))).thenReturn(validResponse());
+
+        assertThat(service.generate(context(FieldCategory.IT)).message()).contains("encapsulation");
+        verify(provider).generate(contains("Your previous response was invalid"));
+    }
+
+    @Test
     void propagatesProviderFailuresWithoutTreatingThemAsMalformedJson() {
         AiProviderException failure = new AiProviderException(
                 org.springframework.http.HttpStatus.GATEWAY_TIMEOUT,

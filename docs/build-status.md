@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 5 - AI Service (complete)
+Phase 6 - Interview APIs and Lifecycle (complete)
 
 ## Completed
 
@@ -40,6 +40,7 @@ Phase 5 - AI Service (complete)
 - Phase 2 committed as `62799d4 phase-2-database-persistence`.
 - Phase 3 committed as `d61f525 phase-3-authentication-security`.
 - Phase 4 committed as `eb20a88 phase-4-interview-categories`.
+- Phase 5 committed as `1bbae7c phase-5-ai-service`.
 
 ## Phase 2 progress
 
@@ -100,5 +101,22 @@ Phase 5 - AI Service (complete)
 - Complete backend `mvn test`: BUILD SUCCESS (45 tests discovered, 43 passed, 0 failures, 0 errors, 2 skipped).
 - The two skipped tests remain the guarded Phase 2 MySQL integration tests; the required real-MySQL verification is already recorded above as PASS.
 - Real Groq smoke test: NOT RUN because `GROQ_API_KEY` is not present in this process. No key was requested, logged, or committed.
+
+## Phase 6 completion
+
+- Implemented authenticated create, list, retrieve, answer, complete, abandon, and delete endpoints under `/api/interviews`.
+- Session creation validates category/domain/mode compatibility and input bounds, persists the `CREATED` session, obtains exactly one first AI question, persists it, and transitions the session to `IN_PROGRESS` atomically.
+- Answer submission persists ordered USER and ASSISTANT messages, records the AI evaluation on the user answer, advances primary question numbers, and limits each primary question to one focused follow-up while tracking the cumulative follow-up count.
+- Added backend-owned automatic completion at the configured primary-question limit and guarded manual completion and abandonment transitions.
+- Completed and abandoned sessions reject further answers; invalid and duplicate transitions return structured HTTP 409 responses.
+- All session retrieval, mutation, listing, and deletion queries are scoped to the authenticated user. Missing and wrong-owner UUIDs intentionally return the same HTTP 404 response.
+- Added lightweight owned interview-history responses with progress, configuration, status, score, and timing fields, while detailed retrieval returns the ordered transcript.
+- Added explicit transcript removal before session deletion so database state and long-lived JPA persistence contexts remain consistent.
+- Enforced one question per accepted AI message and enhanced the deterministic test provider with strong, partial, incorrect, and follow-up behavior.
+- Added structured HTTP 400 handling for malformed JSON, enum values, and UUID path parameters.
+- Phase 6-only tests: PASS (12 tests, 0 failures, 0 errors, 0 skipped).
+- Verified IT and Non-IT creation, first-question persistence, answer evaluation, sequence ordering, capped follow-ups, automatic and manual completion, abandonment, invalid transitions, question limits, duplicate answers, payload validation, history isolation, deletion, and anonymous security through actual HTTP requests.
+- Complete backend `mvn test`: BUILD SUCCESS (57 tests discovered, 55 passed, 0 failures, 0 errors, 2 skipped).
+- The two skipped tests remain the guarded Phase 2 MySQL integration tests; their required real-MySQL execution is already recorded above as PASS with no skipped MySQL tests.
 
 No deployment was performed.
