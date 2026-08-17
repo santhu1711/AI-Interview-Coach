@@ -8,4 +8,5 @@ export const interviewService = {
   answer: async (sessionId: string, answer: string) => (await api.post<Interview>(`/api/interviews/${sessionId}/answers`, { answer })).data,
   complete: async (sessionId: string) => (await api.post<Interview>(`/api/interviews/${sessionId}/complete`)).data,
   abandon: async (sessionId: string) => (await api.post<Interview>(`/api/interviews/${sessionId}/abandon`)).data,
+  delete: async (sessionId: string) => { await api.delete(`/api/interviews/${sessionId}`); },
 };

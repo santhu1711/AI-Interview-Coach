@@ -1,0 +1,18 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { HistoryView } from "@/components/history/history-view";
+import { dashboardService } from "@/services/dashboard-service";
+import { interviewService } from "@/services/interview-service";
+import type { InterviewHistory, InterviewSummary } from "@/types/dashboard";
+import type { InterviewOptions } from "@/types/interview";
+vi.mock("@/services/dashboard-service", () => ({ dashboardService: { history: vi.fn() } }));
+vi.mock("@/services/interview-service", () => ({ interviewService: { options: vi.fn(), delete: vi.fn() } }));
+const options: InterviewOptions = { fieldCategories: [{ value: "IT", label: "IT Field" }, { value: "NON_IT", label: "Non-IT Field" }], domainLabels: { IT: "Technical Domain", NON_IT: "Professional Domain" }, domains: { IT: [{ value: "JAVA", label: "Java" }], NON_IT: [{ value: "SALES", label: "Sales" }] }, modes: { IT: [{ value: "TECHNICAL", label: "Technical" }], NON_IT: [{ value: "BEHAVIOURAL", label: "Behavioural" }] }, difficulties: [{ value: "MEDIUM", label: "Medium" }], experienceLevels: [], minimumQuestions: 5, maximumQuestions: 20, defaultQuestions: 10, customDomain: { minimumLength: 2, maximumLength: 120 }, targetRole: { minimumLength: 2, maximumLength: 150 } };
+const item: InterviewSummary = { id: "one", fieldCategory: "IT", interviewDomain: "JAVA", customDomain: null, topic: "Spring APIs", difficulty: "MEDIUM", interviewMode: "TECHNICAL", targetRole: "Developer", experienceLevel: "JUNIOR", totalQuestions: 5, currentQuestionNumber: 5, followUpCount: 0, progressPercentage: 100, status: "REPORT_GENERATED", overallScore: 80, startedAt: null, completedAt: null, createdAt: "2026-08-17T12:00:00Z", updatedAt: "2026-08-17T12:00:00Z" };
+const history: InterviewHistory = { content: [item], page: 0, size: 10, totalElements: 1, totalPages: 1, first: true, last: true };
+describe("HistoryView", () => {
+  beforeEach(() => { vi.clearAllMocks(); vi.mocked(interviewService.options).mockResolvedValue(options); vi.mocked(dashboardService.history).mockResolvedValue(history); });
+  it("renders history actions and applies category-driven filters", async () => { render(<HistoryView/>); expect(await screen.findByText("Spring APIs")).toBeInTheDocument(); expect(screen.getByRole("link", { name: "View report" })).toHaveAttribute("href", "/report/one"); fireEvent.change(screen.getByLabelText("Field"), { target: { value: "NON_IT" } }); expect(screen.getByLabelText("Domain")).toHaveTextContent("Sales"); fireEvent.change(screen.getByLabelText("Topic or target role"), { target: { value: "customer" } }); fireEvent.click(screen.getByRole("button", { name: "Apply filters" })); await waitFor(() => expect(dashboardService.history).toHaveBeenLastCalledWith(expect.objectContaining({ search: "customer", fieldCategory: "NON_IT", page: 0 }))); });
+  it("deletes only after confirmation and refreshes history", async () => { vi.mocked(interviewService.delete).mockResolvedValue(); render(<HistoryView/>); await screen.findByText("Spring APIs"); fireEvent.click(screen.getByRole("button", { name: "Delete Spring APIs" })); expect(screen.getByRole("dialog")).toBeInTheDocument(); fireEvent.click(screen.getByRole("button", { name: "Delete interview" })); await waitFor(() => expect(interviewService.delete).toHaveBeenCalledWith("one")); expect(dashboardService.history).toHaveBeenCalledTimes(2); });
+  it("renders filtered empty state", async () => { vi.mocked(dashboardService.history).mockResolvedValue({ ...history, content: [], totalElements: 0, totalPages: 0 }); render(<HistoryView/>); expect(await screen.findByText("No interviews found")).toBeInTheDocument(); });
+});

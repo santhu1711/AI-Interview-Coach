@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 9 - Interview Frontend (complete)
+Phase 10 - Complete Frontend (complete)
 
 ## Completed
 
@@ -44,6 +44,7 @@ Phase 9 - Interview Frontend (complete)
 - Phase 6 committed as `fb0c627 phase-6-interview-api`.
 - Phase 7 committed as `80e21ca phase-7-reports-dashboard-history`.
 - Phase 8 committed as `9fec7e5 phase-8-frontend-foundation`.
+- Phase 9 committed as `21d03e4 phase-9-interview-frontend`.
 
 ## Phase 2 progress
 
@@ -171,6 +172,26 @@ Phase 9 - Interview Frontend (complete)
 - Frontend `npm.cmd run test`: PASS (6 files, 19 tests, 0 failures). Phase 9 coverage verifies option loading, IT/Non-IT switching, custom-domain and blank validation, creation payload and session navigation, setup failure/retry, refresh restoration, question/progress/transcript display, hidden evaluations, answer submission, AI loading, duplicate prevention, preserved failed answers, completion, abandonment, invalid-session handling, and protected access.
 - Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; compilation, TypeScript validation, and generation completed for static setup and dynamic `/interview/[sessionId]` routes.
 - Vitest required execution outside the managed filesystem sandbox because its esbuild configuration loader cannot resolve this workspace path inside the sandbox; the suite itself ran normally and passed completely.
+- No deployment was performed and no secrets were added.
+
+## Phase 10 completion
+
+- Replaced the dashboard foundation with the complete authenticated dashboard: personalized welcome, total/completed/active and IT/Non-IT counts, average/highest/pass statistics, strongest/focus domains, recent interviews, and a first-interview empty state.
+- Added responsive Recharts score-trend, domain-performance, and IT-versus-Non-IT visualizations with a useful no-report-data state.
+- Added complete authenticated history with topic/role search, backend-driven category/domain/mode/difficulty filters, status filters, all four sort orders, reset, result totals, pagination, context-sensitive continue/report actions, empty/error/loading states, and confirmed permanent deletion.
+- Added complete authenticated reports with explicit generation for completed sessions, restoration of persisted reports, in-progress and abandoned guards, configuration and duration metadata, PASS/FAIL outcome, colour-coded overall and category-specific scores, strengths, improvements, revision areas, verdict, and question-by-question feedback.
+- Completed the post-interview navigation so terminal successful sessions link directly to their real report route, while abandoned sessions return to the dashboard.
+- Added the authenticated profile page with safe account details, account creation date, dashboard-derived interview statistics, validated full-name updates, success/error states, and immediate synchronization of the shared authentication context and header.
+- Added responsive protected navigation for Dashboard, Interview, History, and Profile while preserving login, registration, logout, landing, and mobile behavior from Phases 8-9.
+- The master-specified `GET /api/profile` and `PUT /api/profile` contract was absent from the completed backend inventory, so Phase 10 added the narrow missing profile controller, service, request/response DTOs, validation, authenticated ownership handling, and password-safe response shape required for a real profile frontend.
+- Focused `ProfileApiIntegrationTest`: PASS (2 tests, 0 failures, 0 errors, 0 skipped), covering authenticated read/update, trimmed names, creation timestamp, validation, anonymous rejection, and absence of password fields.
+- Complete backend `mvn.cmd test`: BUILD SUCCESS (71 tests discovered, 69 passed, 0 failures, 0 errors, 2 skipped). The two skips are the existing guarded real-MySQL tests; their mandatory earlier real-MySQL run remains recorded as PASS.
+- Frontend `npm.cmd run typecheck`: PASS (0 TypeScript errors).
+- Frontend `npm.cmd run lint`: PASS (0 errors, 0 warnings).
+- Frontend `npm.cmd run test`: PASS (10 files, 31 tests, 0 failures). New coverage verifies dashboard data/empty/error states, analytics integration, history actions/filters/empty/deletion, report rendering/generation/state guards, profile safety/statistics/validation/update/failure, plus all prior auth and interview behavior.
+- Frontend `npm.cmd run build`: PASS with Next.js 16.3.1; compilation, TypeScript validation, static generation, and dynamic report/interview routes completed successfully.
+- Vitest required execution outside the managed filesystem sandbox because its esbuild configuration loader cannot resolve this workspace path inside the sandbox; the suite itself ran normally and passed completely.
+- Maven emitted its existing Mockito/Byte Buddy future-JDK dynamic-agent notice during tests; it did not indicate a test or application failure.
 - No deployment was performed and no secrets were added.
 
 No deployment was performed.
