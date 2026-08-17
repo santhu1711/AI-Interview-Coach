@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+*.iml
+.env
+**/.env
+**/target/
+.m2/
+**/node_modules/
+**/.npm-cache/
+**/.next/
+**/playwright-report/
+**/test-results/
+*.log
+.DS_Store
