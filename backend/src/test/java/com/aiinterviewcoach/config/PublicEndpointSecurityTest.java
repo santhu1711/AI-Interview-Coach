@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.aiinterviewcoach.repository.InterviewMessageRepository;
+import com.aiinterviewcoach.repository.InterviewReportRepository;
 import com.aiinterviewcoach.repository.InterviewSessionRepository;
 import com.aiinterviewcoach.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ class PublicEndpointSecurityTest {
     @MockitoBean private UserRepository userRepository;
     @MockitoBean private InterviewSessionRepository interviewSessionRepository;
     @MockitoBean private InterviewMessageRepository interviewMessageRepository;
+    @MockitoBean private InterviewReportRepository interviewReportRepository;
 
     @Test
     void actuatorHealthIsPublic() throws Exception {

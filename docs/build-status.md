@@ -4,7 +4,7 @@ Last attempted: 2026-08-17
 
 ## Current phase
 
-Phase 6 - Interview APIs and Lifecycle (complete)
+Phase 7 - Reports, Dashboard, and History Backend (complete)
 
 ## Completed
 
@@ -41,6 +41,7 @@ Phase 6 - Interview APIs and Lifecycle (complete)
 - Phase 3 committed as `d61f525 phase-3-authentication-security`.
 - Phase 4 committed as `eb20a88 phase-4-interview-categories`.
 - Phase 5 committed as `1bbae7c phase-5-ai-service`.
+- Phase 6 committed as `fb0c627 phase-6-interview-api`.
 
 ## Phase 2 progress
 
@@ -118,5 +119,19 @@ Phase 6 - Interview APIs and Lifecycle (complete)
 - Verified IT and Non-IT creation, first-question persistence, answer evaluation, sequence ordering, capped follow-ups, automatic and manual completion, abandonment, invalid transitions, question limits, duplicate answers, payload validation, history isolation, deletion, and anonymous security through actual HTTP requests.
 - Complete backend `mvn test`: BUILD SUCCESS (57 tests discovered, 55 passed, 0 failures, 0 errors, 2 skipped).
 - The two skipped tests remain the guarded Phase 2 MySQL integration tests; their required real-MySQL execution is already recorded above as PASS with no skipped MySQL tests.
+
+## Phase 7 completion
+
+- Implemented authenticated report generation and retrieval at `POST /api/interviews/{sessionId}/report` and `GET /api/interviews/{sessionId}/report`.
+- Report generation is limited to owned, completed sessions, uses a pessimistic session lock, rejects duplicate generation, persists the report, records the overall score, and advances the session to `REPORT_GENERATED`.
+- Added strict structured AI report parsing with one corrective retry, bounded scores, backend-owned PASS/FAIL calculation at the 60-point threshold, and category-specific score requirements and nullability.
+- IT reports include technical accuracy, conceptual understanding, problem solving, communication, and confidence. Non-IT reports include communication, confidence, situational judgement, role understanding, and problem solving.
+- Persisted strengths, weaknesses, revision areas, verdict, recommendation, and per-question feedback, and exposed the defined Excellent, Good, Adequate, and Weak score interpretations.
+- Expanded owned interview history with topic/role search, category/domain/mode/difficulty/status filters, newest/oldest/highest/lowest sorting, null-last score ordering, and bounded pagination metadata.
+- Implemented authenticated `GET /api/dashboard/summary` and `GET /api/dashboard/performance` with owned totals, status/category counts, score averages, highest score, pass percentage, domain extremes, recent interviews, score trends, domain performance, and category comparison.
+- Dashboard, history, and report tests verify ownership isolation; anonymous requests remain HTTP 401 and wrong-owner resources remain indistinguishable from missing resources at HTTP 404.
+- Phase 7-focused automated tests: PASS (12 tests, 0 failures, 0 errors, 0 skipped).
+- Complete backend `mvn test`: BUILD SUCCESS (69 tests discovered, 67 passed, 0 failures, 0 errors, 2 skipped).
+- The two skipped tests are the guarded Phase 2 real-MySQL integration tests because `MYSQL_INTEGRATION_TESTS=true` was not set for this Phase 7 run; their mandatory real-MySQL execution remains recorded above as PASS with no skipped MySQL tests.
 
 No deployment was performed.

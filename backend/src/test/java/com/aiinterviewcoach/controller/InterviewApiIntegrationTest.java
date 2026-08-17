@@ -200,7 +200,8 @@ class InterviewApiIntegrationTest {
 
         mockMvc.perform(get("/api/interviews").header("Authorization", bearer(ownerToken)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("$.totalElements").value(2));
 
         mockMvc.perform(delete("/api/interviews/{id}", firstId)
                         .header("Authorization", bearer(ownerToken)))

@@ -4,7 +4,6 @@ import com.aiinterviewcoach.dto.request.CreateInterviewRequest;
 import com.aiinterviewcoach.dto.request.SubmitAnswerRequest;
 import com.aiinterviewcoach.dto.response.InterviewMessageResponse;
 import com.aiinterviewcoach.dto.response.InterviewResponse;
-import com.aiinterviewcoach.dto.response.InterviewSummaryResponse;
 import com.aiinterviewcoach.entity.InterviewMessage;
 import com.aiinterviewcoach.entity.InterviewSession;
 import com.aiinterviewcoach.entity.User;
@@ -15,6 +14,7 @@ import com.aiinterviewcoach.exception.DuplicateAnswerException;
 import com.aiinterviewcoach.exception.InvalidInterviewStateException;
 import com.aiinterviewcoach.exception.ResourceNotFoundException;
 import com.aiinterviewcoach.repository.InterviewMessageRepository;
+import com.aiinterviewcoach.repository.InterviewReportRepository;
 import com.aiinterviewcoach.repository.InterviewSessionRepository;
 import com.aiinterviewcoach.repository.UserRepository;
 import com.aiinterviewcoach.service.ai.AiTranscriptEntry;
@@ -37,6 +37,7 @@ public class InterviewService {
 
     private final InterviewSessionRepository sessionRepository;
     private final InterviewMessageRepository messageRepository;
+    private final InterviewReportRepository reportRepository;
     private final UserRepository userRepository;
     private final InterviewConfigurationValidator configurationValidator;
     private final InterviewAiService aiService;
@@ -44,11 +45,13 @@ public class InterviewService {
     public InterviewService(
             InterviewSessionRepository sessionRepository,
             InterviewMessageRepository messageRepository,
+            InterviewReportRepository reportRepository,
             UserRepository userRepository,
             InterviewConfigurationValidator configurationValidator,
             InterviewAiService aiService) {
         this.sessionRepository = sessionRepository;
         this.messageRepository = messageRepository;
+        this.reportRepository = reportRepository;
         this.userRepository = userRepository;
         this.configurationValidator = configurationValidator;
         this.aiService = aiService;
@@ -94,13 +97,6 @@ public class InterviewService {
     public InterviewResponse get(Long userId, UUID sessionId) {
         InterviewSession session = ownedSession(userId, sessionId);
         return response(session, messageRepository.findAllByInterviewSessionIdOrderBySequenceNumberAsc(sessionId));
-    }
-
-    @Transactional(readOnly = true)
-    public List<InterviewSummaryResponse> list(Long userId) {
-        return sessionRepository.findAllByUserIdOrderByCreatedAtDesc(userId).stream()
-                .map(InterviewService::summary)
-                .toList();
     }
 
     @Transactional
@@ -184,6 +180,7 @@ public class InterviewService {
     @Transactional
     public void delete(Long userId, UUID sessionId) {
         InterviewSession session = ownedSession(userId, sessionId);
+        reportRepository.findByInterviewSessionId(sessionId).ifPresent(reportRepository::delete);
         messageRepository.deleteAll(
                 messageRepository.findAllByInterviewSessionIdOrderBySequenceNumberAsc(sessionId));
         sessionRepository.delete(session);
@@ -251,15 +248,6 @@ public class InterviewService {
                 session.getFollowUpCount(), progress(session), session.getStatus(), session.getOverallScore(),
                 session.getStartedAt(), session.getCompletedAt(), session.getCreatedAt(), session.getUpdatedAt(),
                 messages.stream().map(InterviewService::messageResponse).toList());
-    }
-
-    private static InterviewSummaryResponse summary(InterviewSession session) {
-        return new InterviewSummaryResponse(
-                session.getId(), session.getFieldCategory(), session.getInterviewDomain(), session.getCustomDomain(),
-                session.getTopic(), session.getDifficulty(), session.getInterviewMode(), session.getTargetRole(),
-                session.getExperienceLevel(), session.getTotalQuestions(), session.getCurrentQuestionNumber(), session.getFollowUpCount(),
-                progress(session), session.getStatus(), session.getOverallScore(), session.getStartedAt(),
-                session.getCompletedAt(), session.getCreatedAt(), session.getUpdatedAt());
     }
 
     private static InterviewMessageResponse messageResponse(InterviewMessage message) {

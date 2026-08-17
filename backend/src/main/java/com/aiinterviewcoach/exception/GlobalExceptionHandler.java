@@ -1,6 +1,7 @@
 package com.aiinterviewcoach.exception;
 
 import com.aiinterviewcoach.dto.response.ApiErrorResponse;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.LinkedHashMap;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -62,13 +64,22 @@ public class GlobalExceptionHandler {
         return response(HttpStatus.CONFLICT, "Conflict", exception.getMessage(), request, Map.of());
     }
 
-    @ExceptionHandler({InvalidInterviewStateException.class, DuplicateAnswerException.class})
+    @ExceptionHandler({
+        InvalidInterviewStateException.class,
+        DuplicateAnswerException.class,
+        DuplicateReportException.class
+    })
     ResponseEntity<ApiErrorResponse> interviewConflict(
             RuntimeException exception, HttpServletRequest request) {
         return response(HttpStatus.CONFLICT, "Conflict", exception.getMessage(), request, Map.of());
     }
 
-    @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({
+        HttpMessageNotReadableException.class,
+        MethodArgumentTypeMismatchException.class,
+        HandlerMethodValidationException.class,
+        ConstraintViolationException.class
+    })
     ResponseEntity<ApiErrorResponse> malformedRequest(Exception exception, HttpServletRequest request) {
         return response(
                 HttpStatus.BAD_REQUEST,
