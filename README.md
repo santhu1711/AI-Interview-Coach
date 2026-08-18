@@ -1,139 +1,506 @@
-# AI Interview Coach
+# 🤖 AI Interview Coach
 
-AI Interview Coach is a complete local full-stack application for realistic IT and Non-IT interview practice. It provides adaptive one-question-at-a-time sessions, persistent transcripts, detailed reports, searchable history, analytics, and profile management.
+AI Interview Coach is a **full-stack AI-powered interview preparation platform** for IT and Non-IT roles.
 
-## Features
+It provides realistic, adaptive interview sessions with one question at a time, secure authentication, persistent interview history, AI-generated performance reports, analytics, and personalized feedback.
 
-- IT interviews across software, data, cloud, security, support, and custom domains with technical, coding, conceptual, debugging, scenario, system-design, and mixed modes.
-- Non-IT interviews across HR, support, sales, marketing, operations, finance, teaching, leadership, and custom domains with behavioural, situational, communication, customer-handling, role-specific, and mixed modes.
-- Backend-driven options, follow-ups, refresh recovery, completion, abandonment, reports, dashboards, history filters/pagination/deletion, and strict per-user ownership.
-- Responsive authenticated UI with validation, loading, empty, error, and invalid-session states.
+## 🌐 Live Demo
 
-## Technology stack
+**Live Application:**
+https://ai-interview-coach-nu-sage.vercel.app
 
-- Frontend: Next.js 16 App Router, React 19, TypeScript, Tailwind CSS, React Hook Form, Zod, Axios, Recharts, Lucide, Vitest, Testing Library, Playwright.
-- Backend: Java 21, Spring Boot 3.5, WebClient, Spring Data JPA, Spring Security, JWT, Flyway, MySQL, Actuator, OpenAPI, JUnit, Mockito, MockMvc.
-- AI: configurable Groq OpenAI-compatible API; deterministic provider restricted to the test profile.
+**Backend API:**
+https://ai-interview-coach-production-0d16.up.railway.app
 
-## Architecture
+**Backend Health:**
+https://ai-interview-coach-production-0d16.up.railway.app/api/health
+
+**GitHub Repository:**
+https://github.com/santhu1711/AI-Interview-Coach
+
+---
+
+## ✨ Features
+
+### 🎯 AI Interview Practice
+
+* IT and Non-IT interview categories
+* Role and domain-based interview configuration
+* Beginner, Intermediate, and Experienced levels
+* Easy, Medium, and Hard difficulty
+* Configurable question count
+* One-question-at-a-time interview experience
+* Adaptive AI follow-up questions
+* Real-time answer submission
+* Interview progress tracking
+* Interview recovery after browser refresh
+
+### 💻 IT Interview Areas
+
+Includes:
+
+* Java
+* Spring Boot
+* DSA
+* SQL
+* Python
+* JavaScript / TypeScript
+* React / Next.js
+* Frontend Development
+* Backend Development
+* Full Stack Development
+* DevOps
+* Cloud
+* Cybersecurity
+* AI / Machine Learning
+* IoT / Embedded Systems
+* System Design
+* Testing
+* Technical Support
+* Custom domains
+
+Interview modes include:
+
+* Technical
+* Coding
+* Conceptual
+* Debugging
+* Scenario-Based
+* System Design
+* Mixed
+
+### 💼 Non-IT Interview Areas
+
+Includes:
+
+* Human Resources
+* Customer Support
+* Customer Success
+* Sales
+* Marketing
+* Business Development
+* Operations
+* Project Coordination
+* Administration
+* Finance
+* Banking
+* Teaching
+* Training
+* Recruitment
+* Management
+* Leadership
+* Content Writing
+* Custom domains
+
+Interview modes include:
+
+* HR
+* Behavioural
+* Situational
+* Role Specific
+* Communication
+* Customer Handling
+* Leadership
+* Mixed
+
+---
+
+## 📊 AI Performance Reports
+
+After completing an interview, users receive a detailed AI-generated report including:
+
+* Overall score
+* Pass / Fail verdict
+* Performance rating
+* Strengths
+* Areas for improvement
+* Revision topics
+* Recommendation
+* Question-level feedback
+
+### IT scoring dimensions
+
+* Technical Accuracy
+* Conceptual Understanding
+* Problem Solving
+* Communication
+* Confidence
+
+### Non-IT scoring dimensions
+
+* Communication
+* Confidence
+* Situational Judgement
+* Role Understanding
+* Problem Solving
+
+---
+
+## 📈 Dashboard & History
+
+The dashboard provides:
+
+* Total interviews
+* Completed interviews
+* Active interviews
+* IT vs Non-IT interview count
+* Average score
+* Highest score
+* Pass percentage
+* Strongest domain
+* Focus domain
+* Score trend charts
+* Domain performance analytics
+
+Interview history supports:
+
+* Search
+* Filtering
+* Sorting
+* Pagination
+* Resume active interviews
+* View reports
+* Delete interviews
+
+---
+
+## 🔐 Authentication & Security
+
+* User registration
+* Secure login
+* BCrypt password hashing
+* JWT authentication
+* Protected APIs
+* User-scoped interview ownership
+* Restricted CORS
+* Structured security errors
+* Sensitive data redaction
+
+Each user can access only their own:
+
+* Interviews
+* Messages
+* Reports
+* History
+* Dashboard data
+
+---
+
+## 🛠 Technology Stack
+
+### Frontend
+
+* Next.js 16
+* React 19
+* TypeScript
+* Tailwind CSS
+* Axios
+* React Hook Form
+* Zod
+* Recharts
+* Lucide Icons
+* Vitest
+* Testing Library
+* Playwright
+
+### Backend
+
+* Java 21
+* Spring Boot 3.5
+* Spring Security
+* JWT
+* Spring Data JPA
+* Hibernate
+* WebClient
+* Flyway
+* MySQL
+* Actuator
+* OpenAPI / Swagger
+* JUnit
+* Mockito
+* MockMvc
+
+### AI
+
+* Groq API
+* Model: `openai/gpt-oss-120b`
+* Structured JSON responses
+* Adaptive interview prompts
+* Automated response validation
+* Corrective retry handling
+
+### Deployment
+
+* **Frontend:** Vercel
+* **Backend:** Railway
+* **Database:** Railway MySQL
+* **AI Provider:** Groq
+* **Source Control:** GitHub
+
+---
+
+## 🏗 Architecture
 
 ```mermaid
 flowchart LR
-    Browser[Next.js browser UI] -->|Axios + Bearer JWT| API[Spring Boot REST API]
-    API --> Security[Spring Security]
-    API --> Services[Application services]
+    Browser[Next.js Frontend] -->|Axios + Bearer JWT| API[Spring Boot REST API]
+    API --> Security[Spring Security + JWT]
+    API --> Services[Application Services]
     Services --> JPA[Spring Data JPA]
-    JPA --> MySQL[(MySQL 8)]
-    Services -->|WebClient| Groq[Groq API]
+    JPA --> MySQL[(MySQL)]
+    Services -->|WebClient| Groq[Groq AI API]
 ```
 
-Details: [architecture](docs/architecture.md), [API flow](docs/api-flow.md), [database](docs/database-design.md), and [security](docs/security.md).
+More details:
 
-Production configuration is documented in the [deployment guide](docs/deployment-guide.md).
+* [Architecture](docs/architecture.md)
+* [API Flow](docs/api-flow.md)
+* [Database Design](docs/database-design.md)
+* [Security](docs/security.md)
+* [Deployment Guide](docs/deployment-guide.md)
+* [Testing Guide](docs/testing-guide.md)
 
-## Folder structure
+---
+
+## 📁 Project Structure
 
 ```text
-backend/      Spring Boot API, migrations, and backend tests
-frontend/     Next.js application, unit tests, and Playwright tests
-docs/         Specification, design, setup, testing, and build status
-README.md     Overview and quick start
-LICENSE       Project license
+AI-Interview-Coach/
+│
+├── backend/
+│   ├── Spring Boot REST API
+│   ├── Spring Security
+│   ├── JPA repositories
+│   ├── Flyway migrations
+│   └── Backend tests
+│
+├── frontend/
+│   ├── Next.js application
+│   ├── Authentication
+│   ├── Interview UI
+│   ├── Dashboard
+│   ├── Reports
+│   ├── History
+│   └── Frontend / E2E tests
+│
+├── docs/
+│   ├── Architecture
+│   ├── API design
+│   ├── Database design
+│   ├── Security
+│   ├── Testing
+│   └── Deployment
+│
+├── README.md
+└── LICENSE
 ```
 
-## Prerequisites
+---
 
-- Java 21, Maven 3.9+, Node.js 20+ with npm, and MySQL 8+
-- A Groq API key for real AI interviews
+## 🧪 Testing
 
-Verify Java with `java -version`, Node with `node --version`, Maven with `mvn.cmd -version`, and npm with `npm.cmd --version`.
+The application was developed using a phase-by-phase build, test, fix, verify, and commit workflow.
 
-## Local setup
+### Backend
 
-Create the database:
+* **71 backend tests passed**
+* Real MySQL integration verified
+* Flyway V1–V5 verified
+* Authentication and authorization verified
+* Ownership isolation verified
 
-```sql
-CREATE DATABASE ai_interview_coach CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-CREATE USER 'ai_coach'@'localhost' IDENTIFIED BY 'choose-a-local-password';
-GRANT ALL PRIVILEGES ON ai_interview_coach.* TO 'ai_coach'@'localhost';
-```
+### Frontend
 
-Start the backend from PowerShell. `.env.example` is a reference; Spring Boot does not automatically import `.env` files.
+* **31 frontend tests passed**
+* TypeScript validation passed
+* ESLint passed with zero warnings
+* Production build passed
+
+### End-to-End
+
+* Playwright real-browser scenarios passed
+* Registration and login verified
+* JWT restoration verified
+* IT interview flow verified
+* Non-IT interview flow verified
+* Reports verified
+* Dashboard verified
+* History verified
+* Profile updates verified
+
+### Real AI Verification
+
+The real Groq integration was manually verified with:
+
+* AI-generated first question
+* Answer submission
+* Adaptive follow-up questions
+* Full interview completion
+* AI-generated performance report
+
+Both **IT and Non-IT interviews were manually tested successfully**.
+
+---
+
+## 💻 Local Setup
+
+### Requirements
+
+* Java 21
+* Maven 3.9+
+* Node.js 20+
+* npm
+* MySQL 8+
+* Groq API key
+
+### Backend
 
 ```powershell
 $env:SPRING_PROFILES_ACTIVE='dev'
 $env:DB_URL='jdbc:mysql://localhost:3306/ai_interview_coach'
-$env:DB_USERNAME='ai_coach'
-$env:DB_PASSWORD='your-local-database-password'
-$env:JWT_SECRET='generate-a-long-random-secret-of-at-least-32-bytes'
-$env:JWT_EXPIRATION='3600000'
+$env:DB_USERNAME='your-db-user'
+$env:DB_PASSWORD='your-db-password'
+$env:JWT_SECRET='your-secure-jwt-secret'
 $env:GROQ_API_KEY='your-groq-api-key'
-$env:GROQ_API_BASE_URL='https://api.groq.com/openai/v1'
 $env:GROQ_MODEL='openai/gpt-oss-120b'
-$env:GROQ_TIMEOUT='20s'
 $env:APP_FRONTEND_URL='http://localhost:3000'
+
 cd backend
-mvn.cmd spring-boot:run
+mvn spring-boot:run
 ```
 
-Flyway applies V1-V5 automatically. In a second PowerShell window:
+Flyway automatically applies the database migrations.
+
+### Frontend
 
 ```powershell
 cd frontend
+
 $env:NEXT_PUBLIC_API_URL='http://localhost:8080'
+
 npm.cmd install
 npm.cmd run dev
 ```
 
-Open `http://localhost:3000`. See the [local setup guide](docs/local-setup-guide.md) for a clean-machine procedure.
+Open:
 
-## Testing commands
-
-```powershell
-cd backend
-mvn.cmd test
-
-cd ../frontend
-npm.cmd run typecheck
-npm.cmd run lint
-npm.cmd run test
-npm.cmd run build
-npm.cmd audit
+```text
+http://localhost:3000
 ```
 
-Playwright requires a running disposable MySQL database, backend, and frontend. Then run `npm.cmd run test:e2e`. The guarded real-MySQL backend tests require `MYSQL_INTEGRATION_TESTS=true` plus database variables. See the [testing guide](docs/testing-guide.md).
+---
 
-## Local URLs
+## 🔗 Local Development URLs
 
-- Frontend: http://localhost:3000
-- Backend: http://localhost:8080
-- Swagger: http://localhost:8080/swagger-ui/index.html
-- OpenAPI: http://localhost:8080/v3/api-docs
-- Health: http://localhost:8080/actuator/health
+* Frontend: `http://localhost:3000`
+* Backend: `http://localhost:8080`
+* Swagger: `http://localhost:8080/swagger-ui/index.html`
+* OpenAPI: `http://localhost:8080/v3/api-docs`
+* Health: `http://localhost:8080/api/health`
 
-## Troubleshooting
+---
 
-- Database refused: start MySQL and verify its port, schema, user grants, and `DB_URL`.
-- Flyway validation failed: restore applied migrations and create a new migration for changes.
-- CORS rejected: make `APP_FRONTEND_URL` exactly match the browser origin before backend startup.
-- AI unavailable: verify the Groq key, URL, model, quota, and network. Never use the test provider for normal use.
-- Wrong frontend API: set `NEXT_PUBLIC_API_URL` before starting/building Next.js.
-- PowerShell blocks `npm.ps1`: use `npm.cmd` and `npx.cmd`.
+## 🚀 Production Deployment
 
-## Known limitations and future enhancements
+### Frontend
 
-- Live AI quality and availability depend on Groq, its configured model, quota, and network. No key was available for the final smoke test.
-- JWTs use browser local storage. Production hardening could use secure HttpOnly cookies and CSRF protection.
-- Optional future work: voice interviews, resume-aware prompts, assistive-technology audits, wider browser coverage, observability, containers, and a separately authorized deployment phase.
+Hosted on **Vercel**
 
-## Screenshots
+https://ai-interview-coach-nu-sage.vercel.app
 
-Screenshots have not been captured. Suggested future captures are the landing page, setup, active interview, report, dashboard, and history. No screenshot is represented as existing.
+### Backend
 
-## Author
+Hosted on **Railway**
 
-Built as the AI Interview Coach portfolio project. Project ownership remains with the repository owner.
+https://ai-interview-coach-production-0d16.up.railway.app
 
-## Status
+### Database
 
-Phases 1-12 are implemented and locally verified. See [build status](docs/build-status.md). No deployment is configured or performed.
+Hosted using **Railway MySQL**
+
+### AI
+
+Powered by **Groq** using:
+
+```text
+openai/gpt-oss-120b
+```
+
+---
+
+## 📸 Screenshots
+
+Add screenshots here for:
+
+* Landing page
+* Dashboard
+* Interview Setup
+* Live AI Interview
+* Performance Report
+* Interview History
+
+Example structure:
+
+```markdown
+### Dashboard
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Live Interview
+
+![Live Interview](docs/screenshots/interview.png)
+
+### Performance Report
+
+![Report](docs/screenshots/report.png)
+```
+
+---
+
+## 🔮 Future Improvements
+
+Possible future enhancements include:
+
+* Voice-based interviews
+* Resume-aware interview questions
+* Job-description-based interviews
+* Secure HttpOnly cookie authentication
+* Advanced AI evaluation
+* Interview recording
+* More analytics
+* Accessibility improvements
+* Wider browser testing
+* Observability and monitoring
+
+---
+
+## 👨‍💻 Author
+
+**Santhosh S**
+
+GitHub:
+https://github.com/santhu1711
+
+LinkedIn:
+https://linkedin.com/in/santhosh17
+
+---
+
+## 📌 Project Status
+
+**Completed and deployed ✅**
+
+* Development: ✅
+* Backend testing: ✅
+* Frontend testing: ✅
+* MySQL integration: ✅
+* Real Groq AI testing: ✅
+* Manual IT interview testing: ✅
+* Manual Non-IT interview testing: ✅
+* GitHub: ✅
+* Railway backend deployment: ✅
+* Railway MySQL deployment: ✅
+* Vercel frontend deployment: ✅
+
+**Live Demo:**
+https://ai-interview-coach-nu-sage.vercel.app
