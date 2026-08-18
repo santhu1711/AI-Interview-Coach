@@ -29,6 +29,8 @@ flowchart LR
 
 Details: [architecture](docs/architecture.md), [API flow](docs/api-flow.md), [database](docs/database-design.md), and [security](docs/security.md).
 
+Production configuration is documented in the [deployment guide](docs/deployment-guide.md).
+
 ## Folder structure
 
 ```text

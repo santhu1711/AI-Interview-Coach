@@ -3,6 +3,8 @@
 *.iml
 .env
 **/.env
+**/.env.*
+!**/.env.example
 **/target/
 .m2/
 **/node_modules/
@@ -10,6 +12,8 @@
 **/.next/
 *.tsbuildinfo
 .runtime/
+.vercel/
+*.pid
 **/playwright-report/
 **/test-results/
 *.log
