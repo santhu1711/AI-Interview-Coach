@@ -25,5 +25,5 @@ app:
     provider: ${AI_PROVIDER:groq}
     api-key: ${GROQ_API_KEY:}
     base-url: ${GROQ_API_BASE_URL:https://api.groq.com/openai/v1}
-    model: ${GROQ_MODEL:llama-3.3-70b-versatile}
+    model: ${GROQ_MODEL:openai/gpt-oss-120b}
     timeout: ${GROQ_TIMEOUT:20s}

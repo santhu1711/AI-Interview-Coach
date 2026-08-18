@@ -8,7 +8,7 @@ public class AiProperties {
     private String provider = "groq";
     private String apiKey = "";
     private String baseUrl = "https://api.groq.com/openai/v1";
-    private String model = "llama-3.3-70b-versatile";
+    private String model = "openai/gpt-oss-120b";
     private Duration timeout = Duration.ofSeconds(20);
 
     public String getProvider() { return provider; }

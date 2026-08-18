@@ -30,7 +30,7 @@ $env:JWT_SECRET='a-random-secret-at-least-32-bytes-long'
 $env:JWT_EXPIRATION='3600000'
 $env:GROQ_API_KEY='your-groq-api-key'
 $env:GROQ_API_BASE_URL='https://api.groq.com/openai/v1'
-$env:GROQ_MODEL='llama-3.3-70b-versatile'
+$env:GROQ_MODEL='openai/gpt-oss-120b'
 $env:GROQ_TIMEOUT='20s'
 $env:APP_FRONTEND_URL='http://localhost:3000'
 cd backend
